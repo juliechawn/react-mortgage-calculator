@@ -1,30 +1,50 @@
 import React from 'react';
 
 export default class App extends React.Component {
-  // JS for calculation - 3 function
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+    // getinitialState
     this.state = {
-  //     balance: props.initialBalance
-  //     rate: props.initialRate
-  //     term: props.initialTerm
-
+      inputs: {},
+      output: '',
     };
+    this.updateInputs = this.updateInputs.bind(this);
   }
-// constructor method to initialize the state of app - property for each input field to set initial values - HTML add value attribute to each editable input
-// function update state values when input changes - use event binding - HTML add onChange event
+  updateInputs(event) {
+    event.preventDefault();
+    // update state
+    console.log('inputs updated');
+    const inputs = {
+      balance: this.balance.value,
+      rate: this.rate.value,
+      term: this.term.value,
+    };
+    this.setState({ inputs });
+    console.log(inputs);
+    this.form.reset();
+  }
+  calcuate(balance, rate, term) {
+    const payment = balance[rate(1 + term)];
+    console.log(payment);
+  };
+
 // calculation function for mortgage payment - set state to bind result to "output" - func has 4 parameters (balance, rate, term, period)- HTML add onClick event calls calculate function
   render() {
     return (
-      <div className='container'>
-        <input className='balance' type='number' />
-        <input className='rate' type='number' />
-        <select className='term'> 15, 30 </select>
-        <button className='submit'> Submit </button>
-        <div className='output' />
-      </div>
+      <form onSubmit={ this.updateInputs } ref={ (input) => { this.form = input; } }className='form-horizontal'>
+        <div className='container'>
+          <h1>Mortgage Calculator</h1>
+          <h4>Calculate your mortage balance</h4>
+          <input ref={ (input) => { this.balance = input; } } id='number' name='balance' type='number' placeholder='$ Mortgage Balance' />
+          <input ref={ (input) => { this.rate = input; } } id='number' name='rate' type='number' step='0.01' placeholder='% rate' />
+          <select ref={ (input) => { this.term = input; } } name='term' >
+            <option value='15'> 15 years </option>
+            <option value='30'> 30 years </option>
+          </select>
+          <button type='submit' name='submit' > Submit </button>
+          <div ref={ (output) => { this.output = output; } } />
+        </div>
+      </form>
     );
   }
-}
-
-//{props.balance}
+  }
