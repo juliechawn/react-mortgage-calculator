@@ -5,7 +5,7 @@ export default class App extends React.Component {
     super();
     // getinitialState
     this.state = {
-      balance: '', rate: '', term: '', output: '0',
+      // balance: '', rate: '', term: '', output: '0',
     };
     this.handleChange = this.handleChange.bind(this);
     this.calculatePayment = this.calculatePayment.bind(this);
@@ -25,8 +25,8 @@ export default class App extends React.Component {
       var M = p * ((r * Math.pow((1 + r), n)) / (Math.pow((1 + r), n) - 1));
       this.setState({ output: M.toFixed(2) });
   }
-  clearForm() {
-    this.form.reset();
+  clearForm(event) {
+    this.form.reset(event);
   }
   render() {
     return (
